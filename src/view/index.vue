@@ -16,8 +16,23 @@
       </a>
     </li>
   </ul>
-  <div class="index-content">index-content</div>
-  <div class="footer">footer</div>
+  <div class="index-content">
+    <div class="sale">
+      <h3 class="content-title">热卖商品</h3>
+      <my-goods :data="hotSaleData"></my-goods>
+    </div>
+    <div class="sale">
+      <h3 class="content-title">手机</h3>
+      <my-adver :data="adverPhoneData"></my-adver>
+      <my-goods :data="phoneData"></my-goods>
+    </div>
+    <div class="sale">
+      <h3 class="content-title">智能周边</h3>
+      <my-adver :data="adverSmartData"></my-adver>
+      <my-goods :data="smartData"></my-goods>
+    </div>
+  </div>
+  <my-footer></my-footer>
 </div>
 </template>
 
@@ -25,22 +40,39 @@
 import axios from 'axios'
 import MyHeader from '../components/header'
 import MySwiper from '../components/swiper'
+import MyGoods from '../components/goods'
+import MyAdver from '../components/adList'
+import MyFooter from '../components/footer'
+
 export default {
   components: {
     MyHeader,
-    MySwiper
+    MySwiper,
+    MyGoods,
+    MyAdver,
+    MyFooter
   },
   data () {
     return {
       swiperData: [],
       menuData: [],
-      postData: []
+      postData: [],
+      hotSaleData: [],
+      phoneData: [],
+      smartData: [],
+      adverPhoneData: [],
+      adverSmartData: []
     }
   },
   mounted () {
     this.getSwiperData()
     this.getMenuData()
     this.getPostData()
+    this.getHotSaleData()
+    this.getPhoneData()
+    this.getSmartData()
+    this.getAdPhoneData()
+    this.getAdSmartData()
   },
   methods: {
     async getSwiperData () {
@@ -54,6 +86,26 @@ export default {
     async getPostData () {
       const {data} = await axios.get('/api/post')
       this.postData = data
+    },
+    async getHotSaleData () {
+      const {data} = await axios.get('/api/hotSale')
+      this.hotSaleData = data
+    },
+    async getPhoneData () {
+      const {data} = await axios.get('/api/phoneSale')
+      this.phoneData = data
+    },
+    async getSmartData () {
+      const {data} = await axios.get('/api/smartSale')
+      this.smartData = data
+    },
+    async getAdPhoneData () {
+      const {data} = await axios.get('/api/phoneRecommend')
+      this.adverPhoneData = data
+    },
+    async getAdSmartData () {
+      const {data} = await axios.get('/api/smartRecommend')
+      this.adverSmartData = data
     }
   }
 }
@@ -106,4 +158,17 @@ export default {
     }
   }
 }
+.index-content{
+  width: 1240px;
+  margin: 0 auto;
+  .sale{
+      margin-bottom: 50px;
+      .content-title{
+        font-size: 25px;
+        font-weight: 430;
+        margin-bottom: 10px;
+      }
+  }
+}
+
 </style>
