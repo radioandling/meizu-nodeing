@@ -13,7 +13,11 @@
       <span class="icon-moon icon-search search-icon"></span>
     </div>
     <ul class="header-navi fr">
-      <li v-for="(item, index) in navData" :key="index"><a href="" class="nav-item" @mouseover="showChildren(item)" >{{item.name}}</a></li>
+      <li
+        v-for="(item, index) in navData"
+        :key="index"
+      >
+        <a href="javascript:" class="nav-item" @mouseover="showChildren(item)" @click="goToCate">{{item.name}}</a></li>
     </ul>
   </div>
   <transition name="nav">
@@ -49,13 +53,17 @@ export default {
     this.getNavData()
   },
   methods: {
+    goToCate () {
+      this.$router.push({
+        name: 'cate'
+      })
+    },
     async getNavData () {
       const {data} = await axios.get('api/nav')
       this.navData = data
     },
     showChildren (item) {
       this.childrenData = item.children
-      console.log(this.childrenData)
       this.childrenShow = true
     },
     hiddenChildren () {
