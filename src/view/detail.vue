@@ -52,6 +52,19 @@
     <img :src="item" v-for='(item, index) in detailData.information' :key='index'>
   </div>
   <my-footer></my-footer>
+  <my-dialog
+    :show.sync="dialogShow"
+    :showConfirmButton="false"
+    :showCancelButton="false"
+    :height="80"
+    :width="360"
+    >
+      <div>
+        <i class="icon-font icon-check-circle"></i>
+        成功加入购物车
+      </div>
+      <a href="javascript:;" @click="GoToCart" class="shoppingCar">进入购物车</a>
+    </my-dialog>
   </div>
 </template>
 
@@ -60,16 +73,19 @@ import axios from 'axios'
 import MyHeader from '../components/header'
 import MyFooter from '../components/footer'
 import ImgList from '../components/imgList'
+import MyDialog from '../components/dialog'
 export default {
   components: {
     MyHeader,
     MyFooter,
-    ImgList
+    ImgList,
+    MyDialog
   },
   data () {
     return {
       detailData: {},
-      quantity: 1
+      quantity: 1,
+      dialogShow: false
     }
   },
   mounted () {
@@ -91,11 +107,18 @@ export default {
         data: this.detailData,
         number: this.quantity
       })
+      this.dialogShow = true
     },
     buyItNow () {
       this.$store.commit('ADD_SHOPCART', {
         data: this.detailData,
         number: this.quantity
+      })
+      this.GoToCart()
+    },
+    GoToCart () {
+      this.$router.push({
+        name: 'shoppingcar'
       })
     },
     async getDetailData (id) {
@@ -209,5 +232,8 @@ export default {
   img{
       width: 1240px;
     }
+}
+.shoppingCar{
+  text-decoration: underline;
 }
 </style>

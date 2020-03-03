@@ -3,6 +3,9 @@ import Router from 'vue-router'
 import Index from '../view/index.vue'
 import Category from '../view/category.vue'
 import Detail from '../view/detail.vue'
+import ShoppingCar from '../view/shoppingCar.vue'
+import Pay from '../view/pay.vue'
+
 Vue.use(Router)
 
 export default new Router({
@@ -21,6 +24,16 @@ export default new Router({
       path: '/detail/:id',
       name: 'detail',
       component: Detail
+    },
+    {
+      path: '/shoppingcar',
+      name: 'shoppingcar',
+      component: ShoppingCar
+    },
+    {
+      path: '/pay',
+      name: 'pay',
+      component: Pay
     }
   ]
 })
